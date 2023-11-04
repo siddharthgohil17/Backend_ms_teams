@@ -59,3 +59,26 @@ export async function AssignmentAdd(email, assignmentName, assignmentDescription
     }
   }
   
+  
+
+export async function sendAssignmentDueEmail(email, assignmentName, assignmentDescription) {
+  try {
+    const info = await transporter.sendMail({
+      from: process.env.EMAIL_FROM,
+      to: email,
+      subject: 'Assignment Due Today',
+      html: `
+        <p>Hello,</p>
+        <p>This is a reminder that your assignment "${assignmentName}" is due today.</p>
+        <p>Assignment Description: ${assignmentDescription}</p>
+        <p>Thank you.</p>
+      `,
+    });
+
+    // console.log('Assignment due email sent successfully:', info);
+    return info;
+  } catch (error) {
+    console.error('Error sending assignment due email:', error);
+    throw error;
+  }
+}
