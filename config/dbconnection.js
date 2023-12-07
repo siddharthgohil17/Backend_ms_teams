@@ -3,16 +3,17 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+const startTime = performance.now();
 // Create the connection using the promise-based approach
 const connection = await mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  port: process.env.DB_PORT,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
+  host:'mysql-3395be8e-siddharthgohil07-1a55.a.aivencloud.com',
+  user: 'avnadmin',
+  password:"AVNS_Btp7vSyDm7lE2Vwnh-0",
+  port:27353,
+  database:'CLASSROOM',
 });
 
-
+const endTime = performance.now();
 
 // Confirm the successful database connection
 (async () => {
@@ -21,6 +22,10 @@ const connection = await mysql.createConnection({
     console.log('Connected to the database!');
   } catch (error) {
     console.error('Failed to connect to the database:', error);
+  } finally {
+    // Calculate and log the elapsed time
+    const elapsedTimeInMs = endTime - startTime;
+    console.log(`Connection attempt took ${elapsedTimeInMs.toFixed(2)} ms`);
   }
 })();
 
