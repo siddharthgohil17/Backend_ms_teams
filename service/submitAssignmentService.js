@@ -1,5 +1,6 @@
 import db  from '../config/dbconnection.js';
 import { sendGradeUpdateEmail} from './sendmailService.js';
+let student = 'student';
 class Submission {
     static submitAssignment = async (req, res) => {
         const { assignment_id, student_id, submitted_content } = req.body;
@@ -11,7 +12,7 @@ class Submission {
       
         try {
           // Check if the student_id exists in the users table and has the 'student' role
-          const [studentResults] = await db.query('SELECT * FROM users WHERE user_id = ? AND role = "student"', [student_id]);
+          const [studentResults] = await db.query('SELECT * FROM users WHERE user_id = ? AND role = ?', [student_id,student]);
       
           if (studentResults.length === 0) {
             res.status(404).json({ status: 'failed', message: 'Student ID not found or is not a student' });
@@ -42,7 +43,7 @@ class Submission {
     
         try {
             // Check if the student ID exists and is a student
-            const [userResult] = await db.query('SELECT * FROM users WHERE user_id = ? AND role = "student"', [student_id]);
+            const [userResult] = await db.query('SELECT * FROM users WHERE user_id = ? AND role = ?', [student_id,student]);
             if (userResult.length === 0) {
                 res.status(404).json({ status: 'failed', message: 'Student ID does not exist or is not a student' });
                 return;

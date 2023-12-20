@@ -2,6 +2,7 @@ import jwt from 'jsonwebtoken';
 
 const checkUserRole = async (req, res, next) => {
     try {
+
         const token = req.headers['authorization'].split(' ')[1];
 
         if (!token) {
@@ -11,7 +12,8 @@ const checkUserRole = async (req, res, next) => {
         const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
         const userRole = decoded.accessLevel;
 
-        if (userRole !== 'teacher') {
+         
+        if (userRole !== "teacher") {
             return res.status(403).json({ message: 'Access denied. Insufficient permissions.' });
         }
 

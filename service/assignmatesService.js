@@ -1,18 +1,22 @@
 import db  from '../config/dbconnection.js';
 import { AssignmentAdd } from './sendmailService.js';
 
+let teacher = 'teacher';
+let student = 'student';
 
 class Assignment {
+  
     static addAssignment = async (req, res) => {
+       
         const { teacher_id, assignment_name, assignment_description, assigned_date, due_date } = req.body;
-      
+        console.log(req.body);
         if (!teacher_id || !assignment_name) {
           res.status(400).json({ status: 'failed', message: 'Teacher ID and Assignment Name are required' });
           return;
         }
       
         try {
-          const [teacherResults] = await db.query('SELECT * FROM users WHERE user_id = ? AND role = "teacher"', [teacher_id]);
+            const [teacherResults] = await db.query('SELECT * FROM users WHERE user_id = ? AND role = ?', [teacher_id, teacher]);
       
           if (teacherResults.length === 0) {
             res.status(404).json({ status: 'failed', message: 'Teacher ID does not exist or is not a teacher' });
@@ -22,7 +26,7 @@ class Assignment {
           const currentDate = new Date(); // Get current date in 'YYYY-MM-DD' format
           const [insertResult] = await db.query('INSERT INTO assignments (teacher_id, assignment_name, assignment_description, assigned_date, due_date) VALUES (?, ?, ?, ?, ?)', [teacher_id, assignment_name, assignment_description, assigned_date, due_date]);
       
-          const [students] = await db.query('SELECT * FROM users WHERE role = "student"');
+          const [students] = await db.query('SELECT * FROM users WHERE role = ?',[student]);
       
           for (const student of students) {
             try {
