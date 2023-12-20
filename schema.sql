@@ -1,5 +1,9 @@
 	show databases;
-	use CLASSROOM;
+	use sql12659142;
+	
+	date:dec 7 2023 
+	changing database url because previous free credits of mysql database is exhausetd
+	use CLASSROOM
 
 	CREATE TABLE users (
 		user_id INT AUTO_INCREMENT PRIMARY KEY,

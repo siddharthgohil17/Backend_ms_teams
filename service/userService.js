@@ -6,7 +6,7 @@ import { sendWelcomeEmail } from './sendmailService.js';
 class UserController {
     static userRegistration = async (req, res) => {
         const { username, email, password, role } = req.body;
-
+    
         if (!username || !email || !password || !role) {
             return res.status(400).json({ status: 'failed', message: 'All fields are required' });
         }
@@ -35,7 +35,7 @@ class UserController {
             }
 
             const token = jwt.sign({ ...tokenPayload, accessLevel }, process.env.JWT_SECRET_KEY);
-
+        
             res.status(201).json({
                 status: 'success',
                 message: 'You are registered successfully',

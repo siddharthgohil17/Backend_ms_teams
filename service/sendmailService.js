@@ -3,7 +3,6 @@ import transporter from "../config/transportmail.js";
 
 
 export async function sendWelcomeEmail(email) {
-console.log(email);
   try {
     let info = await transporter.sendMail({
       from: process.env.EMAIL_FROM,
